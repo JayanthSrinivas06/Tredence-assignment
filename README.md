@@ -204,6 +204,24 @@ curl "http://localhost:8000/graph/state/<run_id>"
 - Tools are registered using the `@register_tool` decorator
 - Nodes reference tools by name
 
+## Future Improvements
+
+Given more time, I would add:
+
+1. **Async Execution**: Support for async/await in node functions
+2. **WebSocket Streaming**: Real-time execution log streaming
+3. **Persistent Storage**: SQLite/PostgreSQL backend option
+4. **Parallel Execution**: Run independent nodes in parallel
+5. **Graph Validation**: Validate graph structure before execution
+6. **Dynamic Graph Modification**: Modify graphs during execution
+7. **Better Error Recovery**: Retry logic and fallback nodes
+8. **Metrics & Monitoring**: Execution time, success rates, etc.
+9. **Graph Visualization**: Visual representation of workflows
+10. **More Workflow Examples**: Additional sample workflows
+11. **Unit Tests**: Comprehensive test coverage
+12. **Authentication**: API key or JWT-based auth
+13. **Rate Limiting**: Prevent abuse of API endpoints
+14. **Caching**: Cache execution results for identical inputs
 
 ## Technical Decisions
 
