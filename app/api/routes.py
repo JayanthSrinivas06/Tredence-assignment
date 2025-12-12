@@ -1,6 +1,3 @@
-"""
-FastAPI routes for the workflow engine.
-"""
 from fastapi import APIRouter, HTTPException
 import uuid
 import logging
@@ -22,15 +19,6 @@ router = APIRouter()
 
 @router.post("/graph/create", response_model=CreateGraphResponse)
 async def create_graph(request: CreateGraphRequest):
-    """
-    Create a new workflow graph.
-    
-    Args:
-        request: Graph definition including nodes and edges
-    
-    Returns:
-        Graph ID and success message
-    """
     try:
         # Convert request to Graph model
         nodes = [Node(**node_data) for node_data in request.nodes]
@@ -62,15 +50,6 @@ async def create_graph(request: CreateGraphRequest):
 
 @router.post("/graph/run", response_model=RunGraphResponse)
 async def run_graph(request: RunGraphRequest):
-    """
-    Execute a workflow graph with the given initial state.
-    
-    Args:
-        request: Graph ID and initial state
-    
-    Returns:
-        Run ID, final state, and execution log
-    """
     try:
         # Get graph from storage
         storage = get_storage()
@@ -114,15 +93,6 @@ async def run_graph(request: RunGraphRequest):
 
 @router.get("/graph/state/{run_id}", response_model=StateResponse)
 async def get_state(run_id: str):
-    """
-    Get the state of a workflow run.
-    
-    Args:
-        run_id: Unique run identifier
-    
-    Returns:
-        Current state and execution log
-    """
     try:
         storage = get_storage()
         run = storage.get_run(run_id)
@@ -147,5 +117,4 @@ async def get_state(run_id: str):
 
 @router.get("/health")
 async def health_check():
-    """Health check endpoint."""
     return {"status": "healthy", "service": "Agent Workflow Engine"}

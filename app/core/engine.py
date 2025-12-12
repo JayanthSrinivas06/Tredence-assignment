@@ -1,6 +1,3 @@
-"""
-Graph execution engine.
-"""
 from typing import Any, Dict, List, Optional
 import logging
 from app.models.state import WorkflowState
@@ -12,8 +9,6 @@ logger = logging.getLogger(__name__)
 
 
 class GraphEngine:
-    """Engine for executing workflow graphs."""
-    
     def __init__(self, graph: Graph):
         self.graph = graph
         self.tool_registry = get_tool_registry()
@@ -22,10 +17,6 @@ class GraphEngine:
         self.max_iterations = 100  # Prevent infinite loops
     
     def execute(self, initial_state: Dict[str, Any]) -> tuple[WorkflowState, List[ExecutionLog]]:
-        """
-        Execute the graph with the given initial state.
-        Returns final state and execution log.
-        """
         state = WorkflowState(data=initial_state)
         self.execution_log = []
         self.step_counter = 0
@@ -97,7 +88,6 @@ class GraphEngine:
         return state, self.execution_log
     
     def _execute_node(self, node: Node, state: WorkflowState) -> WorkflowState:
-        """Execute a single node."""
         # Get the tool function
         if not self.tool_registry.has(node.function_name):
             raise ValueError(f"Function '{node.function_name}' not found in tool registry")
@@ -118,7 +108,6 @@ class GraphEngine:
             return state
     
     def _evaluate_condition(self, condition_dict: Dict[str, Any], state: WorkflowState) -> str:
-        """Evaluate a condition from dictionary format."""
         condition_key = condition_dict.get("condition_key")
         operator = condition_dict.get("condition_operator")
         condition_value = condition_dict.get("condition_value")
@@ -135,7 +124,6 @@ class GraphEngine:
         return next_node
     
     def _evaluate_conditional_edge(self, edge: ConditionalEdge, state: WorkflowState) -> str:
-        """Evaluate a conditional edge."""
         state_value = state.get(edge.condition_key)
         
         result = self._compare_values(state_value, edge.condition_operator, edge.condition_value)
@@ -146,7 +134,6 @@ class GraphEngine:
         return next_node
     
     def _compare_values(self, left: Any, operator: str, right: Any) -> bool:
-        """Compare two values using the given operator."""
         if operator == "<":
             return left < right
         elif operator == ">":
@@ -163,7 +150,6 @@ class GraphEngine:
             raise ValueError(f"Unknown operator: {operator}")
     
     def _log_step(self, node: str, status: str, message: str, state: WorkflowState) -> None:
-        """Log an execution step."""
         self.step_counter += 1
         log_entry = ExecutionLog(
             step=self.step_counter,

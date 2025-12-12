@@ -1,14 +1,3 @@
-"""
-Code Review Mini-Agent Workflow Implementation.
-
-This workflow analyzes Python code and iteratively improves quality.
-Steps:
-1. Extract functions from code
-2. Check complexity
-3. Detect issues
-4. Suggest improvements
-5. Loop until quality_score >= threshold
-"""
 import re
 import ast
 from typing import Dict, Any
@@ -18,7 +7,6 @@ from app.core.tools import register_tool
 
 @register_tool("extract_functions")
 def extract_functions(state: WorkflowState) -> WorkflowState:
-    """Extract function definitions from Python code."""
     code = state.get("code", "")
     
     if not code:
@@ -56,7 +44,6 @@ def extract_functions(state: WorkflowState) -> WorkflowState:
 
 @register_tool("check_complexity")
 def check_complexity(state: WorkflowState) -> WorkflowState:
-    """Check code complexity (simplified cyclomatic complexity)."""
     code = state.get("code", "")
     functions = state.get("functions", [])
     
@@ -100,7 +87,6 @@ def check_complexity(state: WorkflowState) -> WorkflowState:
 
 @register_tool("detect_issues")
 def detect_issues(state: WorkflowState) -> WorkflowState:
-    """Detect code quality issues."""
     functions = state.get("functions", [])
     complexity_scores = state.get("complexity_scores", [])
     
@@ -147,7 +133,6 @@ def detect_issues(state: WorkflowState) -> WorkflowState:
 
 @register_tool("suggest_improvements")
 def suggest_improvements(state: WorkflowState) -> WorkflowState:
-    """Generate improvement suggestions based on detected issues."""
     issues = state.get("issues", [])
     
     suggestions = []
@@ -176,7 +161,6 @@ def suggest_improvements(state: WorkflowState) -> WorkflowState:
 
 @register_tool("calculate_quality_score")
 def calculate_quality_score(state: WorkflowState) -> WorkflowState:
-    """Calculate overall code quality score (0-10)."""
     issue_count = state.get("issue_count", 0)
     avg_complexity = state.get("avg_complexity", 0)
     function_count = state.get("function_count", 1)
@@ -201,10 +185,6 @@ def calculate_quality_score(state: WorkflowState) -> WorkflowState:
 
 
 def get_code_review_workflow_definition() -> Dict[str, Any]:
-    """
-    Get the code review workflow definition.
-    This can be used to create the graph via API.
-    """
     return {
         "name": "Code Review Mini-Agent",
         "description": "Analyzes Python code and iteratively improves quality",

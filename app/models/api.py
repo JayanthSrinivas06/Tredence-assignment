@@ -1,13 +1,9 @@
-"""
-API request and response models.
-"""
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 from app.models.graph import Graph
 
 
 class CreateGraphRequest(BaseModel):
-    """Request model for creating a graph."""
     name: str = Field(..., description="Graph name")
     description: Optional[str] = Field(None, description="Graph description")
     nodes: List[Dict[str, Any]] = Field(..., description="List of node definitions")
@@ -16,19 +12,16 @@ class CreateGraphRequest(BaseModel):
 
 
 class CreateGraphResponse(BaseModel):
-    """Response model for graph creation."""
     graph_id: str = Field(..., description="Unique graph identifier")
     message: str = Field(..., description="Success message")
 
 
 class RunGraphRequest(BaseModel):
-    """Request model for running a graph."""
     graph_id: str = Field(..., description="Graph identifier to run")
     initial_state: Dict[str, Any] = Field(default_factory=dict, description="Initial state data")
 
 
 class ExecutionLog(BaseModel):
-    """Execution log entry."""
     step: int = Field(..., description="Step number")
     node: str = Field(..., description="Node name")
     status: str = Field(..., description="Execution status")
@@ -37,7 +30,6 @@ class ExecutionLog(BaseModel):
 
 
 class RunGraphResponse(BaseModel):
-    """Response model for graph execution."""
     run_id: str = Field(..., description="Unique run identifier")
     graph_id: str = Field(..., description="Graph identifier")
     final_state: Dict[str, Any] = Field(..., description="Final state after execution")
@@ -46,7 +38,6 @@ class RunGraphResponse(BaseModel):
 
 
 class StateResponse(BaseModel):
-    """Response model for state retrieval."""
     run_id: str = Field(..., description="Run identifier")
     graph_id: str = Field(..., description="Graph identifier")
     current_state: Dict[str, Any] = Field(..., description="Current state")

@@ -1,12 +1,8 @@
-"""
-Graph structure models for defining workflows.
-"""
 from typing import Any, Callable, Dict, List, Optional, Union
 from pydantic import BaseModel, Field
 
 
 class ConditionalEdge(BaseModel):
-    """Represents a conditional edge with branching logic."""
     condition_key: str = Field(..., description="Key in state to evaluate")
     condition_operator: str = Field(..., description="Operator: <, >, <=, >=, ==, !=")
     condition_value: Any = Field(..., description="Value to compare against")
@@ -15,7 +11,6 @@ class ConditionalEdge(BaseModel):
 
 
 class Node(BaseModel):
-    """Represents a node in the workflow graph."""
     name: str = Field(..., description="Unique node identifier")
     function_name: str = Field(..., description="Name of the function to execute")
     description: Optional[str] = Field(None, description="Node description")
@@ -25,7 +20,6 @@ class Node(BaseModel):
 
 
 class Edge(BaseModel):
-    """Represents an edge connecting two nodes."""
     from_node: str = Field(..., description="Source node name")
     to_node: Union[str, ConditionalEdge] = Field(..., description="Target node or conditional edge")
     
@@ -34,7 +28,6 @@ class Edge(BaseModel):
 
 
 class Graph(BaseModel):
-    """Represents a complete workflow graph."""
     graph_id: Optional[str] = Field(None, description="Unique graph identifier")
     name: str = Field(..., description="Graph name")
     description: Optional[str] = Field(None, description="Graph description")
@@ -46,14 +39,12 @@ class Graph(BaseModel):
         arbitrary_types_allowed = True
     
     def get_node(self, name: str) -> Optional[Node]:
-        """Get a node by name."""
         for node in self.nodes:
             if node.name == name:
                 return node
         return None
     
     def get_next_node(self, current_node: str) -> Optional[Union[str, ConditionalEdge]]:
-        """Get the next node name or conditional edge from current node."""
         for edge in self.edges:
             if edge.from_node == current_node:
                 return edge.to_node

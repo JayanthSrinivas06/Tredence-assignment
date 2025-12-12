@@ -1,6 +1,3 @@
-"""
-Agent Workflow Engine - FastAPI Application
-"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import logging
@@ -39,20 +36,17 @@ app.include_router(router, tags=["Workflow Engine"])
 
 @app.on_event("startup")
 async def startup_event():
-    """Startup event handler."""
     logger.info("Agent Workflow Engine starting up...")
     logger.info("Tools registered and ready")
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """Shutdown event handler."""
     logger.info("Agent Workflow Engine shutting down...")
 
 
 @app.get("/")
 async def root():
-    """Root endpoint."""
     return {
         "message": "Agent Workflow Engine API",
         "version": "1.0.0",
@@ -63,4 +57,5 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
+    
     uvicorn.run(app, host="0.0.0.0", port=8000)
