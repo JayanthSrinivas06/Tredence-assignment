@@ -248,10 +248,3 @@ You can test the API using:
 - **Postman**: Import the OpenAPI schema from `/openapi.json`
 - **Python requests**: Write custom test scripts
 
-## License
-
-This project is created as part of an AI Engineering internship assignment.
-
-## Author
-
-Created for Tredence AI Engineering Internship Assignment
